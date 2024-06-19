@@ -1,0 +1,138 @@
+{% extends 'base_main.html' %}
+
+{% block base_content %}
+<body class="homepage">
+   <!-- Header -->
+   <div id="header">
+      <div class="container"> 
+         <img src="../media/images/1.jpg" min-width = "1200px">
+         
+         <!-- Logo -->
+         <div id="logo">
+            <h1><a href="{% url 'recommand:main' %}">Fashion</a></h1>
+            <span>For your style</span>
+         </div>
+         
+         <!-- Nav -->
+         <nav id="nav">
+            <ul>
+               <li class="active"><a href="{% url 'recommand:main' %}">Homepage</a></li>
+               <li><a href="{% url 'recommand:man' %}">MAN</a></li>
+               <li><a href="{% url 'recommand:woman' %}">WOMAN</a></li>
+            </ul>
+         </nav>
+      </div>
+   </div>
+   
+
+   <!-- Footer -->
+   <div id="featured">
+
+      <div class="ManWoman" style="display: flex; justify-content: space-around;">
+         <style>
+
+            .mw {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               text-align: center;
+               margin: 0 auto; /* 수평 가운데 정렬을 위해 추가 */
+               max-width: 400px; /* 가운데 정렬의 폭을 조정할 수 있습니다. */
+            }
+
+            .mw h2, .mw p {
+               margin: 0; /* 기본 마진 제거 */
+            }
+
+            .mw img {
+               margin: auto; /* 이미지를 수평 가운데 정렬하기 위해 */
+            }
+         </style>
+         
+
+         <div class="row">
+            
+            <div class = "mw">
+               <h2 >MAN</h2>
+               <a href="{% url 'recommand:man' %}" class="image full">
+                  <img id="image_id_man" src="../media/images/man/1.jpg"  width="314" height="500">
+               </a>
+               
+               <p><a href="{% url 'recommand:man' %}" class="button">More Details</a></p>
+            </div>
+            
+            <div class = "mw">
+               <h2>WOMAN</h2>
+               <a href="{% url 'recommand:woman' %}" class="image full">
+                  <img id="image_id_woman" src="../media/images/woman/1.jpg" width="314" height="500">
+               </a>
+               
+               <p><a href="{% url 'recommand:woman' %}" class="button">More Details</a></p>
+            </div>
+            
+            <script language="javascript">
+               
+               var obTimeOutMan;
+               var obTimeOutWoman;
+
+               var ObjectArrayMan = [
+                  "../media/images/man/1.jpg",
+                  "../media/images/man/2.jpg",
+                  "../media/images/man/3.jpg",
+                  "../media/images/man/4.jpg",
+                  "../media/images/man/5.jpg",
+                  "../media/images/man/6.jpg",
+                  "../media/images/man/7.jpg",
+                  "../media/images/man/8.jpg",
+                  "../media/images/man/9.jpg",
+                  "../media/images/man/10.jpg",
+               ];
+
+               var ObjectArrayWoman = [
+                  "../media/images/woman/1.jpg",
+                  "../media/images/woman/2.jpg",
+                  "../media/images/woman/3.jpg",
+                  "../media/images/woman/4.jpg",
+                  "../media/images/woman/5.jpg",
+                  "../media/images/woman/6.jpg",
+                  "../media/images/woman/7.jpg",
+                  "../media/images/woman/8.jpg",
+                  "../media/images/woman/9.jpg",
+                  "../media/images/woman/10.jpg",
+               ];
+               var nObjectCntMan = 0;
+               var nObjectCntWoman = 0;
+            
+               function ShowDefaultRotateMan() {
+                  nObjectCntMan++;
+                  if (nObjectCntMan < ObjectArrayMan.length) {
+                     document.getElementById("image_id_man").src = ObjectArrayMan[nObjectCntMan];
+                     obTimeOutMan = setTimeout(ShowDefaultRotateMan, 5000);
+                  } else {
+                     clearTimeout(obTimeOutMan);
+                  }
+               }
+            
+               function ShowDefaultRotateWoman() {
+                  nObjectCntWoman++;
+                  if (nObjectCntWoman < ObjectArrayWoman.length) {
+                     document.getElementById("image_id_woman").src = ObjectArrayWoman[nObjectCntWoman];
+                     obTimeOutWoman = setTimeout(ShowDefaultRotateWoman, 5000);
+                  } else {
+                     clearTimeout(obTimeOutWoman);
+                  }
+               }
+            
+               function startAnimation() {
+                  obTimeOutMan = setTimeout(ShowDefaultRotateMan, 100);
+                  obTimeOutWoman = setTimeout(ShowDefaultRotateWoman, 100);
+               }
+            
+               window.onload = startAnimation;
+            </script>
+
+         </div>
+      </div>
+   </div>
+</body>
+{% endblock%}

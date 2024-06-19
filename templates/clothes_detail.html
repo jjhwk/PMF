@@ -1,0 +1,70 @@
+{% extends 'base_main.html' %}
+
+{% block head %}
+<style>
+    .results-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .result-item {
+        margin: 10px;
+        text-align: center;
+    }
+    .result-item img {
+        width: 200px;  /* 적절한 크기로 조정하세요 */
+        height: auto;
+    }
+</style>
+{% endblock %}
+
+{% block base_content %}
+<body>
+    <!-- Header -->
+    <div id="header">
+        <!-- Logo -->
+        <div id="logo">
+            <h1><a href="{% url 'recommand:main' %}">Fashion</a></h1>
+            <span>For your style</span>
+        </div>
+    </div>
+    <br> <br>
+    <style>
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <br> <br>
+    <h4 style="color:white; margin-top: 10px; text-align: center;"> <!-- 수정된 부분 -->
+        <a href="https://www.musinsa.com/app/goods/{{clothe_id}}">
+            {{ clothe_title }}
+        </a>
+    </h4>
+    <div class="image">
+        <a href="https://www.musinsa.com/app/goods/{{clothe_id}}">
+            <img src="https://image.msscdn.net/images/goods_img/{{ related_img_url }}" style="width:200px; height:300px;" alt="Clothe Image">
+        </a>
+        <br> <br>
+    </div>
+    <br> <br>
+    <div class="image">
+        <span style = "color:white; text-align: center; font-size: larger;">How about these clothes?</span>
+    </div>
+    <div class="results-container">
+        {% for text_title, text_url, text_id in results %}
+            <div class="result-item">
+                <a href = "https://www.musinsa.com/app/goods/{{ text_id }}">
+                    <img src="https://image.msscdn.net/images/goods_img/{{ text_url }}" style="width:200px; height:300px;" alt="Image">
+                 </a>
+                <h4 style="color:white; margin-top: 10px; text-align: center;">
+                    <a href = "https://www.musinsa.com/app/goods/{{ text_id }}">
+                        <h4>{{ text_title }}</h4>
+                    </a>
+                </h4>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}

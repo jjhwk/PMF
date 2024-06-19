@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ko">
+    <head>
+        <title>Fashion</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="description" content="">
+        <meta name="keywords" csontent="">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link href="//fonts.googleapis.com/css?family=Arimo:400,700" rel="stylesheet" type="text/css"> <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="{% static 'js/skel.min.js' %}"></script>
+        <script src="{% static 'js/skel-panels.min.js' %}"></script>
+        <script src="{% static 'js/init.js' %}"></script>
+            
+        <link rel="stylesheet" href="{% static 'css/skel-noscript.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style-desktop.css' %}">
+        <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]--><!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        {% block base_content %}{% endblock%}
+        	<!-- Footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="6u">
+                        <section><h2>MAN's STYLE</h2>
+                            <ul class="default">                        
+                                <li><a href="{%url 'recommand:아메카지' %}">아메카지</a></li>
+                                <li><a href="{%url 'recommand:캐주얼' %}">캐주얼</a></li>
+                                <li><a href="{%url 'recommand:시크' %}">시크</a></li>
+                                <li><a href="{%url 'recommand:댄디' %}">댄디</a></li>
+                                <li><a href="{%url 'recommand:비즈니스캐주얼' %}">포멀</a></li>
+                                <li><a href="{%url 'recommand:고프코어' %}">고프코어</a></li>
+                                <li><a href="{%url 'recommand:스포티' %}">스포티</a></li>
+                                <li><a href="{%url 'recommand:스트릿' %}">스트릿</a></li>
+                            </ul></section></div>
+                    <div class="6u">
+                        <section><h2>WOMAN's STYLE</h2>
+                            <ul class="default">
+                                <li><a href="{%url 'recommand:캐주얼_w' %}">캐주얼</a></li>
+                                <li><a href="{%url 'recommand:시크_w' %}">시크</a></li>
+                                <li><a href="{%url 'recommand:비즈니스캐주얼_w' %}">포멀</a></li>
+                                <li><a href="{%url 'recommand:걸리시_w' %}">걸리시</a></li>
+                                <li><a href="{%url 'recommand:로맨틱_w' %}">로맨틱</a></li>
+                                <li><a href="{%url 'recommand:스포티_w' %}">스포티</a></li>
+                                <li><a href="{%url 'recommand:스트릿_w' %}">스트릿</a></li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div id="copyright">
+            <div class="container">
+                <p>Passion makes Fashion</p>
+            </div>
+        </div>
+    </body>
+</html>

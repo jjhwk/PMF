@@ -1,0 +1,49 @@
+{% extends 'base_main.html' %}
+
+{% block base_content %}
+<body>
+   <!-- Header -->
+   <div id="header">
+      
+         <!-- Logo -->
+         <div id="logo">
+            <h1><a href="{% url 'recommand:main' %}">Fashion</a></h1>
+            <span>For your style</span>
+         </div>
+        </div>
+    </div>
+    
+    <style>
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;   
+        }
+    </style>
+    <br><br>
+
+    <div class="image">
+        <br><br>
+        
+
+        <img src="{{ img_id }}" style="width:200px; height:300px;" alt="Similar Image">
+    </div>    
+        <br> <br> <br>
+        <p style = "font-size: larger; text-align: center; color:white">Clothes Worn</p>
+        <br> <br>
+
+    <div class="image">
+        {% if related_img_urls %}
+            {% for related_img_url in related_img_urls %}
+                <a href = "{% url 'recommand:clothe_info' related_img_url=related_img_url %}">
+                    <img src="https://image.msscdn.net/images/goods_img/{{ related_img_url }}" style="width:200px; height:250px; align-items: center; padding: 10px;" alt="Related Image">
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>No related images found.</p>
+        {% endif %}
+    </div>
+    </div>
+</body>
+<br> <br>
+{% endblock %}

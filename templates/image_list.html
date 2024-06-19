@@ -1,0 +1,79 @@
+{% extends 'base_main.html' %}
+
+{% block base_content %}
+<body>
+   <!-- Header -->
+   <div id="header">
+      
+         <!-- Logo -->
+         <div id="logo">
+            <h1><a href="{% url 'recommand:main' %}">Fashion</a></h1>
+            <span>For your style</span>
+         </div>
+        </div>
+    </div>
+
+
+    <div>
+        
+        <style>
+            .image-list {
+                list-style-type: none;
+                padding: 120px;
+            }
+            .image-list li {
+                display: inline-block;
+                margin: 10px;
+            }
+            .image-list li img {
+                width: 160px;
+                height: 300px;
+            }
+            .pagination {
+                text-align: center;
+                color:white;
+            }
+
+            .pagination a {
+                color: white;
+                text-decoration: none; /* 링크 밑줄 제거 */
+            }
+
+        </style>
+    </div>
+    <div id = "logo">
+        <br>
+        <br>
+        <br>
+        <span style = "color:white; text-align: center; font-size: larger;">{{ style }}</span>
+        <ul class="image-list">
+            {% for url in page_obj %}
+                <li>
+                    <a href="{% url 'recommand:img_detail' img_url=url %}">
+                        <img src="{{ url }}" alt="Image">
+                    </a>
+                </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,233 @@
+{% extends 'base_main.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    /* 파일 선택(input[type="file"]) 스타일 변경 */
+    input[type="file"] {
+        /* 파일 선택 버튼을 숨깁니다 */
+        display: none;
+    }
+
+    /* 파일 선택 버튼 스타일 */
+    .custom-file-upload {
+        background-color: black; /* Black background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 4px 35px; /* Some padding */
+        text-align: center; /* Centered text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Make the button inline element */
+        font-size: 16px; /* Increase font size */
+        margin: 4px 2px; /* Some margin */
+        cursor: pointer; /* Pointer/hand icon */
+        border-radius: 12px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+    
+
+    .bold-text {
+        font-weight: bold;
+        color: white; 
+        color: grey;
+    }
+    /* 이미지 선택 했을 때 이미지 보이게 하기*/
+    .fixed-size-image {
+        width: 300px;
+        height: 450px;
+        display: none;
+    }
+    /* 업로드 버튼 모양 바꾸기*/
+    #upload-button {
+            background-color: black; /* Black background */
+            border: none; /* Remove borders */
+            color: white; /* White text */
+            padding: 7px 18px; /* Some padding */
+            text-align: center; /* Centered text */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Make the button inline element */
+            font-size: 16px; /* Increase font size */
+            margin: 4px 2px; /* Some margin */
+            cursor: pointer; /* Pointer/hand icon */
+            border-radius: 12px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        #upload-button:hover {
+            background-color: grey; /* Darker green on hover */
+        }
+
+    /* 새로고침 버튼 모양 바꾸기 */
+    #refresh-button {
+            background-color: black; /* Green background */
+            border: none; /* Remove borders */
+            color: white; /* White text */
+            padding: 7px 18px; /* Some padding */
+            text-align: center; /* Centered text */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Make the button inline element */
+            font-size: 16px; /* Increase font size */
+            margin: 4px 2px; /* Some margin */
+            cursor: pointer; /* Pointer/hand icon */
+            border-radius: 12px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        #refresh-button:hover {
+            background-color: grey; /* Darker green on hover */
+        }
+
+        h1.small {
+            font-size: 12px;
+            color: lightgrey;
+        }
+</style>
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const previewImg = document.getElementById('preview-img');
+        const reader = new FileReader();
+
+        reader.onload = function() {
+            previewImg.src = reader.result;
+            previewImg.style.display = 'block';
+        };
+
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            previewImg.src = '';
+            previewImg.style.display = 'none';
+        }
+    }
+
+    function showUploadSpinner() {
+        document.getElementById('upload-loading-spinner').style.display = 'block';
+    }
+    /* 버튼 모양 바꾸기*/
+    function showSpinnerAndReload() {
+        // 스피너를 표시하는 코드 (예: 로딩 애니메이션)
+        // 페이지를 새로고침하는 코드
+        location.reload();
+    }
+</script>
+{% endblock %}
+
+{% block base_content %}
+<!-- Header -->
+<div id="header">
+    <div class="container"> 
+        <!-- Logo -->
+        <div id="logo">
+            <h1><a href="{% url 'recommand:main' %}">Fashion</a></h1>
+            <span>For your style</span>
+        </div>
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'recommand:man' %}" style="font-weight: bold; color: white;">MAN</a></li>
+                <li><a href="{% url 'recommand:woman' %}" style= "color: grey;">WOMAN</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Main -->
+<div id="main">
+    <div class="container">
+        <div class="row">
+            <!-- Content -->
+            <div id="content" class="8u skel-cell-important">
+                <section>
+                    <h1>Man Upload Image</h1>
+                    <form method="post" enctype="multipart/form-data" onsubmit="showUploadSpinner()">
+                        {% csrf_token %}
+                        <label for="image" class="custom-file-upload" style="margin-right: 10px;">이미지 선택</label>
+                        <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(event)">
+                        <button type="submit" id="upload-button">Upload</button> 
+                        <div style="display: flex; align-items: center;">
+                            <!-- 로딩 스피너 아이콘 -->
+                            <div id="upload-loading-spinner" style="display: none; margin-left: 10px;">
+                                <i class="fas fa-circle-notch fa-spin" style="font-size: 24px;"></i>
+                            </div>
+                        </div>
+                        <!-- 이미지 미리보기 -->
+                        <div id="image-preview" style="margin-top: 20px;">
+                            <img id="preview-img" src="" alt="Image Preview" class="fixed-size-image">
+                        </div>
+                    </form>
+                </section>
+                <section>
+                    {% if error %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% else %}
+                        <br><br>
+                        <h3 style="color: green;">Prediction: {{ prediction }}</h3>
+                        <img src="{{ image_url }}" style="width:300px; height:450px;" alt="Uploaded Image">
+                        <br><br>
+                        <h2>Similar Images:</h2>
+                        <div>
+                            {% for img_url in img_url_list %}
+                            <a href="{% url 'recommand:img_detail' img_url=img_url %}">
+                                <img src="{{ img_url }}" style="width:150px; height:250px;" alt="Similar Image">
+                            </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <!-- 새로고침 버튼 추가 -->
+                    <br><br>
+                    <h1 class="small">PMF는 실수를 할 수 있습니다.</h1>
+                    <div style="display: flex; align-items: center;">
+                        <button id="refresh-button" onclick="showSpinnerAndReload()">새로고침</button>
+                        <!-- 로딩 스피너 아이콘 -->
+                        <div id="loading-spinner" style="display: none; margin-left: 10px;">
+                            <i class="fas fa-circle-notch fa-spin" style="font-size: 24px;"></i>
+                        </div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function(){
+                            // row 태그 안에 개수 찾기
+                            var imgGet = $('#featured .row > div').length;
+                            console.log(imgGet);
+
+                            $('.reloadBtn').click(function(){
+                                var RanNum = Math.floor(Math.random() * imgGet);
+                                $('#featured .row > div').hide();
+                                $('#featured .row > div').eq(RanNum).show();
+                            });
+                        });
+
+                        function showSpinnerAndReload() {
+                            const refreshButton = document.getElementById('refresh-button');
+                            const uploadButton = document.getElementById('upload-button');
+                            const loadingSpinner = document.getElementById('loading-spinner');
+                            
+                            // 버튼 비활성화 및 로딩 스피너 표시
+                            refreshButton.disabled = true;
+                            uploadButton.disabled = true;
+                            loadingSpinner.style.display = 'block';
+
+                            // 페이지를 잠시 후 새로고침
+                            setTimeout(() => {
+                                location.reload();
+                            }, 100);  // 0.1초 후에 새로고침 (모델 실행 시간에 따라 조정 가능)
+                        }
+
+                        function showUploadSpinner() {
+                            const uploadButton = document.getElementById('upload-button');
+                            const refreshButton = document.getElementById('refresh-button');
+                            const uploadLoadingSpinner = document.getElementById('upload-loading-spinner');
+                            
+                            // 버튼 비활성화 및 로딩 스피너 표시
+                            uploadButton.disabled = true;
+                            refreshButton.disabled = true;
+                            uploadLoadingSpinner.style.display = 'block';
+                        }
+                    </script>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
